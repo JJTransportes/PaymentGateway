@@ -1,0 +1,31 @@
+services:
+  payment-gateway-db:
+    container_name: payment-gateway_db
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=jrdev
+      - POSTGRES_DB=pepi
+      - POSTGRES_PASSWORD=mypass123456
+
+  payment-gateway:
+    container_name: payment-gateway
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - payment-gateway-db
+    ports:
+      - "5400:5400"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+
+      AppConfig__Port: 5400
+      AppConfig__Service: PaymentGateway
+      AppConfig__Status: Running
+    networks:
+      - local-network
+
+networks:
+  local-network:
+    name: local-network
+    external: true
