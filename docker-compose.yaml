@@ -1,11 +1,15 @@
 services:
   payment-gateway-db:
-    container_name: payment-gateway_db
+    container_name: payment_gateway_db
     image: postgres:16
     environment:
       - POSTGRES_USER=jrdev
-      - POSTGRES_DB=pepi
+      - POSTGRES_DB=payment_gateway
       - POSTGRES_PASSWORD=mypass123456
+    ports:
+      - 5435:5432
+    networks:
+      - local-network
 
   payment-gateway:
     container_name: payment-gateway
