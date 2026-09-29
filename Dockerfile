@@ -6,8 +6,9 @@ EXPOSE 5400
 FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["./", "PaymentGateway/"]
-RUN dotnet restore "./PaymentGateway/PaymentGateway.csproj"
+COPY ["Contracts/Contracts.csproj", "Contracts/"]
+COPY ["PaymentGateway/PaymentGateway.csproj", "PaymentGateway/"]
+RUN dotnet restore "PaymentGateway/PaymentGateway.csproj"
 COPY . .
 WORKDIR "/src/PaymentGateway"
 RUN dotnet build "./PaymentGateway.csproj" -c $BUILD_CONFIGURATION -o /app/build

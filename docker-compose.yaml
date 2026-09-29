@@ -14,8 +14,8 @@ services:
   payment-gateway:
     container_name: payment-gateway
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: PaymentGateway/Dockerfile
     depends_on:
       - payment-gateway-db
     ports:
@@ -26,6 +26,24 @@ services:
       AppConfig__Port: 5400
       AppConfig__Service: PaymentGateway
       AppConfig__Status: Running
+      AppConfig__ConnectionString: Host=payment-gateway-db;Port=5432;Database=payment_gateway;Username=jrdev;Password=mypass123456
+      AppConfig__MessageHost: amqp://message-service:5672
+      AppConfig__MessageUser: guest
+      AppConfig__MessagePassword: guest
+      AppConfig__PaymentUrl: https://api.pagar.me/core
+      AppConfig__PaymentGatewayKey: sk_test_2b4bd80a4ac5442f9c331d5dbe0cadf9
+      AppConfig__PaymentGatewayCustomerType: individual
+      AppConfig__PaymentGatewayDocumentType: CPF
+      AppConfig__DefaultAddress__Street: "Não informado"
+      AppConfig__DefaultAddress__Number: "S/N"
+      AppConfig__DefaultAddress__ZipCode: "00000-000"
+      AppConfig__DefaultAddress__Neighborhood: "Não informado"
+      AppConfig__DefaultAddress__City: "Não informado"
+      AppConfig__DefaultAddress__State: "Não informado"
+      AppConfig__DefaultAddress__Country: "Brasil"
+      AppConfig__DefaultAddress__Complement: "Não informado"
+      AppConfig__DefaultAddress__Line1: "Não informado"
+      AppConfig__DefaultAddress__Line2: "Não informado"
     networks:
       - local-network
 
